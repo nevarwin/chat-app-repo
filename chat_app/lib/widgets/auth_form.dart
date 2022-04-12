@@ -6,6 +6,8 @@ class AuthForm extends StatefulWidget {
     String username,
     String password,
     bool isLogin,
+    // for the scaffold snackbar context
+    BuildContext ctx,
   ) submitFn;
 
   AuthForm(this.submitFn);
@@ -16,9 +18,9 @@ class AuthForm extends StatefulWidget {
 
 class _AuthFormState extends State<AuthForm> {
   // onSaved variables
-  var userEmail = '';
-  var userName = '';
-  var userPassword = '';
+  var _userEmail = '';
+  var _userName = '';
+  var _userPassword = '';
   var isLogin = true;
 
   final _formKey = GlobalKey<FormState>();
@@ -33,11 +35,14 @@ class _AuthFormState extends State<AuthForm> {
       _formKey.currentState!.save();
 
       // passing in the data to the submitFn function
+      // trim for the excess whitespace
       widget.submitFn(
-        userEmail,
-        userName,
-        userPassword,
+        _userEmail.trim(),
+        _userName.trim(),
+        _userPassword.trim(),
         isLogin,
+        // for the scaffold snackbar context
+        context,
       );
     }
   }
@@ -65,7 +70,7 @@ class _AuthFormState extends State<AuthForm> {
                       return null;
                     },
                     onSaved: (value) {
-                      userEmail = value!;
+                      _userEmail = value!;
                     },
                     keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(labelText: 'Email'),
@@ -84,7 +89,7 @@ class _AuthFormState extends State<AuthForm> {
                         return null;
                       },
                       onSaved: (value) {
-                        userName = value!;
+                        _userName = value!;
                       },
                       decoration: const InputDecoration(labelText: 'Username'),
                     ),
@@ -99,7 +104,7 @@ class _AuthFormState extends State<AuthForm> {
                       return null;
                     },
                     onSaved: (value) {
-                      userPassword = value!;
+                      _userPassword = value!;
                     },
                     obscureText: true,
                     decoration: const InputDecoration(labelText: 'Password'),
