@@ -1,3 +1,4 @@
+import 'package:chat_app/screens/auth_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:chat_app/widgets/auth_form.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const AuthForm(),
+      home: AuthScreen(),
     );
   }
 }
