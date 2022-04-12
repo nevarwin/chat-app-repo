@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AuthForm extends StatefulWidget {
+  final bool isLoading;
   final void Function(
     String email,
     String username,
@@ -10,7 +11,10 @@ class AuthForm extends StatefulWidget {
     BuildContext ctx,
   ) submitFn;
 
-  AuthForm(this.submitFn);
+  AuthForm(
+    this.submitFn,
+    this.isLoading,
+  );
 
   @override
   State<AuthForm> createState() => _AuthFormState();
@@ -112,27 +116,30 @@ class _AuthFormState extends State<AuthForm> {
                   const SizedBox(height: 12),
 
                   // Login Button
-                  RaisedButton(
-                    onPressed: _trySubmit,
-                    child: Text(
-                      isLogin ? 'Login' : 'Signup',
+                  if (widget.isLoading) const CircularProgressIndicator(),
+                  if (!widget.isLoading)
+                    RaisedButton(
+                      onPressed: _trySubmit,
+                      child: Text(
+                        isLogin ? 'Login' : 'Signup',
+                      ),
                     ),
-                  ),
 
                   // Signup Button
-                  FlatButton(
-                    textColor: Theme.of(context).primaryColor,
-                    onPressed: () {
-                      setState(() {
-                        isLogin = !isLogin;
-                      });
-                    },
-                    child: Text(
-                      isLogin
-                          ? 'Create new account'
-                          : 'Already have an account',
+                  if (!widget.isLoading)
+                    FlatButton(
+                      textColor: Theme.of(context).primaryColor,
+                      onPressed: () {
+                        setState(() {
+                          isLogin = !isLogin;
+                        });
+                      },
+                      child: Text(
+                        isLogin
+                            ? 'Create new account'
+                            : 'Already have an account',
+                      ),
                     ),
-                  ),
                 ],
               ),
             ),
