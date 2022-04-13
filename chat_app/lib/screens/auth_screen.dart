@@ -87,6 +87,39 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Flutter Chat'),
+        actions: [
+          DropdownButton(
+            // the 3 dotted button in top right
+            icon: Icon(
+              Icons.more_vert,
+              color: Theme.of(context).primaryIconTheme.color,
+            ),
+            items: [
+              // button for logout
+              DropdownMenuItem(
+                value: 'logout',
+                child: Row(
+                  children: const [
+                    Icon(
+                      Icons.exit_to_app,
+                    ),
+                    SizedBox(width: 8.0),
+                    Text('Logout'),
+                  ],
+                ),
+              ),
+            ],
+            // to log the user out
+            onChanged: (itemIdentifier) {
+              if (itemIdentifier == 'logout') {
+                FirebaseAuth.instance.signOut();
+              }
+            },
+          ),
+        ],
+      ),
       backgroundColor: Theme.of(context).primaryColor,
       body: AuthForm(
         _submitAuthForm,
