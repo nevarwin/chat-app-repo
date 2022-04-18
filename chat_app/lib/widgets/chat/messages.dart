@@ -8,49 +8,39 @@ class Messages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final firebaseAuth = FirebaseAuth.instance; 
-    // final User? user;
-    // user = firebaseAuth.currentUser;
+    final firebaseAuth = FirebaseAuth.instance;
+    final User? user;
+    user = firebaseAuth.currentUser;
 
-    return FutureBuilder(
-      future: FirebaseAuth.instance.currentUser(),
-      builder: (ctx, futureSnapshot) {
-        if (futureSnapshot.connectionState == ConnectionState.waiting){
+    return StreamBuilder(
+      stream: FirebaseFirestore.instance
+          .collection('chat')
+          .orderBy(
+            'createAt',
+            descending: true,
+          )
+          .snapshots(),
+      builder: (context, chatSnapshot) {
+        if (chatSnapshot.connectionState == ConnectionState.waiting) {
           return const Center(
-              child: CircularProgressIndicator(),
-            );
+            child: CircularProgressIndicator(),
+          );
         }
-      return StreamBuilder(
-        stream: FirebaseFirestore.instance
-            .collection('chat')
-            .orderBy(
-              'createAt',
-              descending: true,
-            )
-            .snapshots(),
-        builder: (context, chatSnapshot) {  
-          if (chatSnapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          final chatDocs = chatSnapshot.data!.documents;
-          return ListView.builder(
+        final chatDocs = chatSnapshot.data!.documents;
+        return ListView.builder(
             // makes all the content at the bottom
             reverse: true,
             itemCount: chatDocs.length,
             itemBuilder: (context, index) {
-                return MessageBubble(
-                  chatDocs[index]['text'], 
-                  chatDocs[index]['userId'] == futureSnapshot.data!.uid,
-                  key: ValueKey(chatDocs[index]['documentID'],
+              return MessageBubble(
+                chatDocs[index]['text'],
+                chatDocs[index]['userId'] == user!.uid,
+                key: ValueKey(
+                  chatDocs[index]['documentID'],
                 ),
-                );
-            }
-          );
-        },
-      ),
-      }
+              );
+            });
+      },
     );
   }
 }
