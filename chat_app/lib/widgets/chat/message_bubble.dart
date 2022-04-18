@@ -7,10 +7,11 @@ class MessageBubble extends StatelessWidget {
     required this.key,
   });
 
-  final String message;
   final bool isMe;
   // added key per message for better rendering
   final Key key;
+
+  final String message;
 
   @override
   Widget build(BuildContext context) {
