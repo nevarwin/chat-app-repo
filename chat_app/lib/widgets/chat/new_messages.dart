@@ -16,6 +16,10 @@ class _NewMessagesState extends State<NewMessages> {
   void _sendMessage() async {
     // to get the user id
     final user = FirebaseAuth.instance.currentUser;
+    final userData = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .get();
     // unfocusing the keyboard
     FocusScope.of(context).unfocus();
     // adding enteredMessage to the firestore
@@ -23,7 +27,8 @@ class _NewMessagesState extends State<NewMessages> {
     FirebaseFirestore.instance.collection('chat').add({
       'text': _enteredMessage,
       'createdAt': Timestamp.now(),
-      'userId': user!.uid,
+      'userId': user.uid,
+      'username': userData['username'],
     });
 
     // actually clearing the textfield after sending
