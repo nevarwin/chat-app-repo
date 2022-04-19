@@ -1,10 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 // for the platform exception in catch
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
-import 'package:chat_app/widgets/auth_form.dart';
+import 'package:chat_app/widgets/auth/auth_form.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);
@@ -22,6 +25,7 @@ class _AuthScreenState extends State<AuthScreen> {
     String email,
     String username,
     String password,
+    File image,
     bool isLogin,
     // ctx for the scaffold snackbar
     BuildContext ctx,
@@ -41,6 +45,15 @@ class _AuthScreenState extends State<AuthScreen> {
           email: email,
           password: password,
         );
+
+        // Validation for image
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child('user-image')
+            .child(userCredential.user!.uid + '.png');
+
+        await ref.putFile(image);
+
         // extra userdata when creating new user
         await FirebaseFirestore.instance
             .collection('users')
