@@ -12,8 +12,9 @@ class AuthForm extends StatefulWidget {
 
   final void Function(
     String email,
-    String username,
     String password,
+    String username,
+    File image,
     bool isLogin,
     // for the scaffold snackbar context
     BuildContext ctx,
@@ -27,11 +28,8 @@ class AuthForm extends StatefulWidget {
 
 class _AuthFormState extends State<AuthForm> {
   var isLogin = true;
-
   final _formKey = GlobalKey<FormState>();
-  // onSaved variables
   var _userEmail = '';
-
   var _userName = '';
   var _userPassword = '';
   File? _userImageFile;
@@ -65,6 +63,7 @@ class _AuthFormState extends State<AuthForm> {
         _userEmail.trim(),
         _userName.trim(),
         _userPassword.trim(),
+        _userImageFile!,
         isLogin,
         // for the scaffold snackbar context
         context,
