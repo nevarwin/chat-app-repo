@@ -53,6 +53,7 @@ class _AuthScreenState extends State<AuthScreen> {
             .child(userCredential.user!.uid + '.png');
 
         await ref.putFile(image);
+        final url = await ref.getDownloadURL();
 
         // extra userdata when creating new user
         await FirebaseFirestore.instance
@@ -66,6 +67,7 @@ class _AuthScreenState extends State<AuthScreen> {
             .set({
           'username': username,
           'email': email,
+          'imageUrl': url,
         });
         setState(() {
           _isLoading = false;
