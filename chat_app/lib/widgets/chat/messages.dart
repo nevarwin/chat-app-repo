@@ -28,19 +28,20 @@ class Messages extends StatelessWidget {
         }
         final chatDocs = chatSnapshot.data!.documents;
         return ListView.builder(
-            // makes all the content at the bottom
-            reverse: true,
-            itemCount: chatDocs.length,
-            itemBuilder: (context, index) {
-              return MessageBubble(
-                chatDocs[index]['text'],
-                chatDocs[index]['username'],
-                chatDocs[index]['userId'] == user!.uid,
-                key: ValueKey(
-                  chatDocs[index]['documentID'],
-                ),
-              );
-            });
+          // makes all the content at the bottom
+          reverse: true,
+          itemCount: chatDocs.length,
+          itemBuilder: (context, index) {
+            return MessageBubble(
+              chatDocs[index]['text'],
+              chatDocs[index]['username'],
+              chatDocs[index]['userId'] == user!.uid,
+              key: ValueKey(
+                chatDocs[index]['documentID'],
+              ),
+            );
+          },
+        );
       },
     );
   }
