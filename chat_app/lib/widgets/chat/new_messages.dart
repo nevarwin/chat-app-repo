@@ -22,10 +22,11 @@ class _NewMessagesState extends State<NewMessages> {
         .get();
     // unfocusing the keyboard
     FocusScope.of(context).unfocus();
-    // adding enteredMessage to the firestore
-    // adding createdAt also for ordering the message from latest to oldest
+    // adding data to the chat collection
     FirebaseFirestore.instance.collection('chat').add({
+      // adding enteredMessage to the firestore
       'text': _enteredMessage,
+      // adding createdAt also for ordering the message from latest to oldest
       'createdAt': Timestamp.now(),
       'userId': user.uid,
       'username': userData['username'],
