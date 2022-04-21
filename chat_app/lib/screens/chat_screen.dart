@@ -16,6 +16,14 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     final fbm = FirebaseMessaging.instance;
+    FirebaseMessaging.onMessage.listen((message) {
+      print(message);
+    });
+    FirebaseMessaging.onBackgroundMessage((message) {
+      final msg = print(message);
+      return msg as Future<void>;
+    });
+
     fbm.requestPermission();
     fbm.getInitialMessage();
     super.initState();
