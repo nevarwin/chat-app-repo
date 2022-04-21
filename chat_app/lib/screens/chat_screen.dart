@@ -15,7 +15,6 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
-    final fbm = FirebaseMessaging.instance;
     FirebaseMessaging.onMessage.listen((message) {
       print(message);
     });
@@ -24,8 +23,11 @@ class _ChatScreenState extends State<ChatScreen> {
       return msg as Future<void>;
     });
 
+    final fbm = FirebaseMessaging.instance;
     fbm.requestPermission();
     fbm.getInitialMessage();
+    // refering to the chat in firestore database
+    fbm.subscribeToTopic('chat');
     super.initState();
   }
 
