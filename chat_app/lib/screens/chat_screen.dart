@@ -1,11 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:chat_app/widgets/chat/messages.dart';
 import 'package:chat_app/widgets/chat/new_messages.dart';
 
-class ChatScreen extends StatelessWidget {
+class ChatScreen extends StatefulWidget {
   const ChatScreen({Key? key}) : super(key: key);
+
+  @override
+  State<ChatScreen> createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> {
+  @override
+  void initState() {
+    final fbm = FirebaseMessaging.instance;
+    fbm.requestPermission();
+    fbm.getInitialMessage();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
