@@ -29,7 +29,7 @@ class _NewMessagesState extends State<NewMessages> {
       // adding createdAt also for ordering the message from latest to oldest
       'createdAt': Timestamp.now(),
       'userId': user.uid,
-      'username': userData['username'],
+      'username': userData.data()['username'],
       'userImage': userData['userImage'],
     });
 

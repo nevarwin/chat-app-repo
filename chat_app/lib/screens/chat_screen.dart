@@ -14,22 +14,37 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   @override
-  void initState() {
-    FirebaseMessaging.onMessage.listen((message) {
-      print(message);
-    });
-    FirebaseMessaging.onBackgroundMessage((message) {
-      final msg = print(message);
-      return msg as Future<void>;
-    });
+  // void initState() {
+  //   FirebaseMessaging.onMessage.listen((message) {
+  //     print(message);
+  //   });
+  //   FirebaseMessaging.onBackgroundMessage((message) {
+  //     final msg = print(message);
+  //     return msg as Future<void>;
+  //   });
 
+  //   final fbm = FirebaseMessaging.instance;
+  //   fbm.requestPermission();
+  //   fbm.getInitialMessage();
+  //   // refering to the chat in firestore database
+  //   fbm.subscribeToTopic('chat');
+  //   super.initState();
+  // }
+  
+  void initState() {
+    super.initState();
     final fbm = FirebaseMessaging.instance;
     fbm.requestPermission();
-    fbm.getInitialMessage();
-    // refering to the chat in firestore database
+    FirebaseMessaging.onMessage.listen((message) {
+      print(message);
+      return;
+    });
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+       print(message);
+      return;
+    });
     fbm.subscribeToTopic('chat');
-    super.initState();
-  }
+}
 
   @override
   Widget build(BuildContext context) {
