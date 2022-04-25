@@ -89,6 +89,9 @@ class _AuthFormState extends State<AuthForm> {
                   // Email
                   TextFormField(
                     key: const ValueKey('email'),
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    textCapitalization: TextCapitalization.none,
                     validator: (value) {
                       if (value!.isEmpty || !value.contains('@')) {
                         return 'Please enter a valid email';
@@ -108,6 +111,9 @@ class _AuthFormState extends State<AuthForm> {
                     TextFormField(
                       // adding key for the if statement
                       key: const ValueKey('username'),
+                      autocorrect: false,
+                      enableSuggestions: false,
+                      textCapitalization: TextCapitalization.words,
                       validator: (value) {
                         if (value!.isEmpty || value.length < 4) {
                           return 'Username must be at least 4 characters';
@@ -123,6 +129,7 @@ class _AuthFormState extends State<AuthForm> {
                   // Password
                   TextFormField(
                     key: const ValueKey('password'),
+                    enableSuggestions: false,
                     validator: (value) {
                       if (value!.isEmpty || value.length < 7) {
                         return 'Username must be at least 7 characters';

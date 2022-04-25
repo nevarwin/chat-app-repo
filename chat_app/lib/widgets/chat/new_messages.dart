@@ -29,7 +29,7 @@ class _NewMessagesState extends State<NewMessages> {
       // adding createdAt also for ordering the message from latest to oldest
       'createdAt': Timestamp.now(),
       'userId': user.uid,
-      'username': userData.data()['username'],
+      'username': userData.data()!['username'],
       'userImage': userData['userImage'],
     });
 
@@ -48,6 +48,8 @@ class _NewMessagesState extends State<NewMessages> {
             child: TextField(
               // controlling the field so it can be cleared
               controller: _controller,
+              autocorrect: true,
+              enableSuggestions: true,
               decoration: const InputDecoration(labelText: 'Send a message...'),
               onChanged: (value) {
                 _enteredMessage = value;

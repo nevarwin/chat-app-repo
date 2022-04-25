@@ -106,6 +106,7 @@ class _AuthScreenState extends State<AuthScreen> {
         title: const Text('Flutter Chat'),
         actions: [
           DropdownButton(
+            underline: Container(),
             // the 3 dotted button in top right
             icon: Icon(
               Icons.more_vert,
